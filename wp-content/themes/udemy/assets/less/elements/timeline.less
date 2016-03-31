@@ -1,0 +1,232 @@
+/* ========================================================================
+   Component: timeline.less
+ ========================================================================== */
+ 
+@timeline-badge-size:           50px;
+@timeline-datetime-height:      20px;
+@timeline-separator-width:      140px;
+
+// Timeline container
+// --------------------------------
+.timeline {
+    list-style: none;
+    padding: 0 0 20px;
+    position: relative;
+    
+    // Timeline central line
+    &:before {
+        top: 0;
+        bottom: 0;
+        position: absolute;
+        content: " ";
+        width: 1px;
+        background-color: #d1d2d3;
+        left: @timeline-separator-width / 2;
+
+    }
+
+}
+
+// Timeline list itmes
+// --------------------------------
+.timeline > li {
+    .clearfix();
+    margin-bottom: 20px;
+    position: relative;
+    margin-top: 30px;
+
+    &.timeline-separator {
+
+      &:before {
+        content: attr(datetime);
+        display: inline-block;
+        width: @timeline-separator-width;
+        text-align: center;
+        padding: 0 20px;
+        line-height: 30px;
+        border: 1px solid #e1e1e1;
+        background-color: #f1f2f3;
+        color: #a1a2a3;
+      }
+    }
+}
+
+// Timeline panel
+// --------------------------------
+.timeline > li > .timeline-panel {
+    position: relative;
+    //float: right;
+    margin-left: @timeline-separator-width + 10;
+
+    // Popover inside timeline panels
+    .popover {
+      position: relative;
+      display: block;
+      margin: 0;
+      width: 100%;
+      max-width: none;
+      .arrow {
+        display: none;
+      }
+      .popover-content {
+        .popover-title {
+          background-color: transparent;
+          border: 0;
+          padding-left: 0;
+          padding-top: 0;
+        }
+      }
+    }
+}
+
+// Timeline Date
+// --------------------------------
+.timeline > li > .timeline-date {
+  float: right;
+  margin: -@timeline-datetime-height 0 0;
+  display: block;
+  height: @timeline-datetime-height;
+  line-height: @timeline-datetime-height;
+  font-size: 13px;
+
+  > time {
+    &:after {
+      content: attr(datetime);
+    }
+  }
+}
+
+
+// Timeline badges
+// --------------------------------
+.timeline > li > .timeline-badge {
+    position: absolute;
+    top: 0;
+    left: @timeline-separator-width / 2;
+    width: @timeline-badge-size;
+    height: @timeline-badge-size;
+    border-radius: 500px;
+    margin-left: -(@timeline-badge-size/2);
+    line-height: @timeline-badge-size;
+    font-size: 1.4em;
+    text-align: center;
+    color: #fff;
+    background-color: #999999;
+    z-index: 100;
+    
+    // Color variants
+    &.primary {
+        background-color: @brand-primary;
+    }
+    &.success {
+        background-color: @brand-success;
+    }
+    &.warning {
+        background-color: @brand-warning;
+    }
+    &.danger {
+        background-color: @brand-danger;
+    }
+    &.info {
+        background-color: @brand-info;
+    }
+
+}
+
+
+// Timeline title
+// --------------------------------
+.timeline-title {
+    margin-top: 0;
+    color: inherit;
+}
+
+// Timeline Body
+// --------------------------------
+.timeline-body > p,
+.timeline-body > ul {
+    margin-bottom: 0;
+}
+.timeline-body > p + p {
+    margin-top: 5px;
+}
+
+// Timeline for Desktops
+// --------------------------------
+@media @desktop {
+    
+    .timeline {
+      &:before {
+        left: 50%;
+        margin-left: (@timeline-badge-size/2);
+      }
+    }
+    
+    .timeline > li.timeline-separator {
+      margin-left: (@timeline-badge-size/2);
+      text-align: center;
+      &:before {
+        margin-left: (@timeline-badge-size/2);
+      }
+    }
+
+    .timeline > li > .timeline-badge {
+      left: 50%;
+      margin-left: 0;
+    }
+
+    .timeline > li > .timeline-date {
+      float: none;
+      position: absolute;
+      width: 40%;
+      left: 50%;
+      top: @timeline-badge-size / 2;
+      margin-left: @timeline-badge-size * 1.5;
+      margin-top: -(@timeline-datetime-height/2);
+    }
+
+    .timeline > li > .timeline-panel {
+      float: left;
+      margin: 0;
+      width: 48%;
+
+      &:before {
+        border-left-width: 15px;
+        border-right-width: 0;
+        top: 26px;
+        right: -15px;
+        left: auto;
+      }
+
+      &:after {
+        border-left-width: 14px;
+        border-right-width: 0;
+        top: 27px;
+        right: -14px;
+        left: auto;
+      }
+      
+      .popover .arrow {
+        top: @timeline-badge-size/2;
+        display: block;
+      }
+    }
+
+    // Timeline inverted
+    // --------------------------------
+    .timeline > li.timeline-inverted {
+
+        > .timeline-panel {
+          float: right;
+          padding-left: @timeline-badge-size;
+        }
+
+        .timeline-date  {
+          left: auto;
+          right: 50%;
+          width: auto;
+          margin-left: 0;
+          margin-right: @timeline-badge-size;
+        }
+    }
+}

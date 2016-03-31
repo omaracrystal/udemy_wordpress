@@ -1,0 +1,136 @@
+//
+// Articles - with Cards
+// --------------------------------------------------
+#articles {
+	.card {
+		.card-title {
+			padding: 8px;
+			.clearfix;
+			em, span {
+				font-size: @font-size-small;
+				font-style: normal;
+			}
+			span:before {
+				content: " by ";
+			}
+		}
+		.card-content {
+			a {
+				h2 {
+					height: 110px;
+					overflow: hidden;
+					color: @text-color;
+					&:hover {
+						color: @brand-primary;
+					}
+				}
+			}
+			.article-category {
+				display: block;
+				margin-bottom: 5px;
+				font-weight: bold;
+				font-size: @font-size-small;
+				text-transform: uppercase;
+			}
+			.card-profile {
+				overflow: hidden;
+			}
+			.copy {
+				height: 65px;
+				overflow: hidden;
+			}
+		}
+		.card-action {
+			.share-btns {
+				.clearfix;
+				.sh-btn {
+					display: block;
+					float: left;
+					margin-right: 10px;
+				}
+			}
+		}
+	}
+}
+
+.share-btns {
+	.clearfix;
+	.sh-btn {
+		display: block;
+		float: left;
+		margin-right: 10px;
+	}
+}
+
+//
+// MAIN ARTICLE
+// --------------------------------------------------
+#article {
+	background: white;
+	padding-top: 15px;
+	padding-bottom: 15px;
+	h1 {
+		margin-top: 0;
+	}
+	.image {
+		margin-bottom: 50px;
+		position:relative; 
+	}
+	.share-btns {
+		margin-bottom: 15px;
+	}
+	.author {
+		text-align: right;
+		.avatar {
+			position: relative;
+		  	z-index: 1;
+		  	.border-radius(50%);
+		  	padding: 5px;
+		  	background-color: #FFF;
+		  	.box-shadow(0 -3px 3px rgba(0,0,0,.2));
+		  	width: 110px;
+		  	margin: -100px 0 15px auto;
+		  	img {
+			  	.border-radius(50%);
+		  	}
+	  	}
+	  	h4 {
+		  	.text-overflow();
+	  	}
+	}
+}
+
+
+//
+// SIDEBAR
+// --------------------------------------------------
+#sidebar {
+	.card {
+		.card-image {
+			height: 104px;
+			overflow: hidden;
+			.card-title {
+				display: none;
+			}
+		}
+		.card-content {
+			a {
+				h2 {
+					height: 50px;
+					font-size: @font-size-large;
+					margin-bottom: 0;
+					color: @text-color;
+				}
+				&:hover {
+					h2 {
+						color: @brand-primary;
+					}
+				}
+			}
+			.copy, .article-category {
+				display: none;
+			}
+		}
+	}
+	
+}
