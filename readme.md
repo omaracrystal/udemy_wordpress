@@ -263,6 +263,7 @@ Extra notes just in case
 
 ###Template tags inside the Loop 
 **making the post more dynamic!**
+
 1. Time and Date
     * https://codex.wordpress.org/Formatting_Date_and_Time
     * ``<span class"date"><?php the_time( 'd M' ); ?></span>``
