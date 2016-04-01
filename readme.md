@@ -272,12 +272,10 @@ Extra notes just in case
     * ``<a href="<?php the_permalink(); ?>" title=""><?php the_title(); ?></a>``
 1. Category
     * ``<span class="tag"><?php the_category(); ?></span>``
-    * By default if no argument is passed into ``the_category()`` function - wordpress will render the categories as an unordered list ``<ul>"
+    * By default if no argument is passed into ``the_category()`` function - wordpress will render the categories as an unordered list ``<ul>``
     * ``the_category(',')`` this will now seperate them with a comma instead.
-
 1. Author
     * ``<span class="post-author">by<a href="<php the_author_link(); ?>"><?php the_author(); ?></a></span>``
-
 1. Excerpt
     * ``<p class="post-excerpt"></p>`` 
     
