@@ -3,14 +3,6 @@
 ``debugging print_r(get_defined_vars( ) )exit( )``
 
 
-[http://localhost:8888/udemy/wp-admin/themes.php]
-[http://localhost:8888/udemy/]
-
-Site Title: omaracrystal
-Username: omaracrystal
-Password: oz@pfZn)XRjZ!Mx21Y
-email: comara@ndevr.com
-
 ##Steps to creating a wordpress site:
 Download MAMP, Wordpress, MySQL and phpAdmin
 Create new folder “udemy" within htdocs and paste Wordpress content into it (from downloaded zip) 
