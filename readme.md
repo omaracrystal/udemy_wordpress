@@ -143,6 +143,7 @@ Extra notes just in case
     * **make sure that within the functions.php the setup.php and any other files are included**
     * ``include( get_template_directory() . '/includes/setup.php' );``
 
+
 ###CREATING HEADERS AND FOOTERS
 1. create file ``header.php`` in ``themes`` folder
 1. create file ``footer.php``
