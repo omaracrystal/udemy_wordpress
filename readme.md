@@ -136,7 +136,8 @@ Extra notes just in case
     ?>
     ```
 
-*if left empty default is used*
+    *if left empty default is used*
+    
 1. Refresh page and nothing! Well that’s because we need to let Wordpress know to render it by going to:
     * ``Appearance > Menus >`` and create a menu > assign **theme location**
     * **make sure that within the functions.php the setup.php and any other files are included**
