@@ -298,3 +298,47 @@ Extra notes just in case
 1. https://developer.wordpress.org/themes/basics/template-hierarchy/
 ![alt text](https://developer.wordpress.org/files/2014/10/template-hierarchy.png)
 
+###Single Posts
+1. When you click on a post wordpress automatically beings you to a seperate page that only shows that post... however the excerpt is still being cut off from previous conditions. We can add logic to indicate when it's a single post to avoid that OR just creat a whole new template. Which is what we will do:
+1. Create ``single.php`` under the theme folder ``udemy``
+1. Copy and paste the template from index then edit the following
+    * delete the tags for the **"Read More"** button
+    * delete ``<p>`` tag with the **excerpt** function
+    * **CONTENT** replace the above with ``<?php the_content(); ?>``
+    * **TAGS** add below content ^ ``<?php the_tags(); ?>``
+    * Refresh page (tags are not displayed but that's because we can **Edit** the post and add them)
+1. On upper bar click ``edit post`` add tags (right column) Add and Save!
+1. Read up on Single Posts: https://codex.wordpress.org/Theme_Development#Single_Post_.28single.php.29 ]
+1. **Quick tags**... within Wordpress under Edit Post switch from **Visual** tab to **Text** tab
+    * inserting the following comment code within the template on Wordpress will tell where Pagination will take place
+        ``<!--nextpage-->``
+    * The above will not work right away - that's because we need to call the ``wp_link_pages()`` function from the Single Posts documentation recommendation: https://codex.wordpress.org/Theme_Development#Single_Post_.28single.php.29 ]
+    * Call this function within the ``the_content()`` and ``the_tags()`` functions within ``single.php``
+    **BEFORE**
+    ```
+    <?php the_content(); ?>
+    <?php wp_link_pages(); ?>
+    <?php the_tags(); ?>
+    ```
+    * https://codex.wordpress.org/Function_Reference/wp_link_pages
+    * Some suggestions include adding and **Edit** option - but because it's already there for this particular post - it's not needed to add. 
+    **text-center AFTER for pagination**
+```
+    <?php the_content(); ?>
+    <?php wp_link_pages(array (
+        'before'           => '<p class="text-center">' . __( 'Pages:' ),
+    ); ?>
+    <?php the_tags(); ?>
+</div>
+<nav class="text-center">
+    <ul class="pagination">
+        <li>
+            <?php previous_post_link('%link', '<i class"fa fa-chevron-left"></i> %title' ); ?>
+        </li>
+        <li>
+            <?php next_post_link('%link', '%title <i class"fa fa-chevron-right"></i>' ); ?>
+        </li>
+    </ul>
+</nav>
+```
+1. **PAGINATION** *note that the previous and next post links are now singular and not plural as listed above (posts vs post)* ``single.php``
