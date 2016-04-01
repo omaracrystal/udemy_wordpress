@@ -242,7 +242,7 @@ Extra notes just in case
         }
     })
     ```
-1. On **Dashboard** Within ``Settings > Reading`` set the limit of the "**Blog pages show at most**" to 4 (to set up pagination in a little bit), and chose radio bullet "**Summary**" for this exercise. 
+1. On **Dashboard** Within ``Settings > Reading`` set the limit of the "**Blog pages show at most**" to 4 (to set up pagination in a little bit), and chose radio bullet "**Summary**" for this exercise. This is display a short hand of the **excerpt** portion for the post. By default wordpress will have [...] to show this. With **Filters** we can get rid of these **brackets** []. 
 1. Functons you can use within the loop: https://codex.wordpress.org/Template_Tags such as:
     * in place of ``<img>`` tags ``<?php the_post_thumbnail(); ?>``
     * The ``the_post_thubnail()`` function can take two arguments= Size and array of attributes
@@ -261,4 +261,20 @@ Extra notes just in case
         ?>
     ```
 
-
+###Template tags inside the Loop 
+**making the post more dynamic!**
+1. Time and Date
+    * https://codex.wordpress.org/Formatting_Date_and_Time
+    * ``<span class"date"><?php the_time( 'd M' ); ?></span>``
+    * ``<span class="time"><?php the_time( ' g:i a'); ?></span>``
+1. Title
+    * ``<a href="<?php the_permalink(); ?>" title=""><?php the_title(); ?></a>``
+1. Category
+    * ``<span class="tag"><?php the_category(); ?></span>``
+    * By default if no argument is passed into ``the_category()`` function - wordpress will render the categories as an unordered list ``<ul>"
+    * ``the_category(',')`` this will now seperate them with a comma instead. 
+1. Author
+    * ``<span class="post-author">by<a href="<php the_author_link(); ?>"><?php the_author(); ?></a></span>``
+1. Excerpt
+    * ``<p class="post-excerpt"></p>`` 
+    
