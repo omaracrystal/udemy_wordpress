@@ -72,19 +72,20 @@ Extra notes just in case
 
 ###ADDING STYLES THROUGH HOOKS
 **Only 2 steps to required to add styles to your pages**
+
 1. Register style:
     *  ``wp_enqueue_scripts`` action ``$handle`` ``$src``
     * https://codex.wordpress.org/Function_Reference/wp_register_style
 ```
     wp_register_style( 'cu_bootstrap', get_template_directory_uri() . '/assets/styles/bootstrap.css');
 ```
-2. Then enqueue the style:
+1. Then enqueue the style:
     * ``wp_enqueue_style( 'cu_bootstrap' );``
     * add php to html after ``<title></title>`` tags
     ```
     <?php wp_head(); ?>
     ```
-3. Add remaining styles and any font urls if needed
+1. Add remaining styles and any font urls if needed
 
 ###ADDING SCRIPTS THROUGH HOOKS
 1. Add in html right above closing tags for ``</body>`` and ``</html>``
