@@ -137,10 +137,126 @@ Extra notes just in case
     ```
 
     *if left empty default is used*
-    
+
 1. Refresh page and nothing! Well that’s because we need to let Wordpress know to render it by going to:
     * ``Appearance > Menus >`` and create a menu > assign **theme location**
     * **make sure that within the functions.php the setup.php and any other files are included**
     * ``include( get_template_directory() . '/includes/setup.php' );``
 
+###CREATING HEADERS AND FOOTERS
+1. create file ``header.php`` in ``themes`` folder
+1. create file ``footer.php``
+1. Call these files within the ``index.php``
+    * ``<?php get_header(); ?>``
+    * ``<?php get_footer(); ?>``
+1. *NOTE* if you want to name your header.php something else that's fine, just make sure that **header** is within the name such as ``header-about.php.`` Then when you are calling the header you write ``<?php get_header('about'); ?>``
+
+###CREATING WIDGET AREAS
+####SIDEBAR
+1. register_sidebar
+    * https://codex.wordpress.org/Function_Reference/register_sidebar
+    *This site recommends adding the action **'widgets_init'*
+1. In ``functions.php`` under the ``//Action & Filter Hooks`` comment add:
+    ```
+    add_action( 'widgets_init', cu_widgets' );
+    ```
+1. Add file ``widgets.php`` under the ``includes`` folder
+1. Include this file ^ it in the ``functions.php`` file
+1. Define the function within ``widgets.php`` file
+    ```
+    function ju_widgets() {
+        register_sidebar(array(
+            'name' => __( 'My First Theme Sidebar', 'udemy'),
+            'id' => 'cu_sidebar', //note be careful to use unique id (not something already used in wordpress)
+            'description' => __( 'Sidebar for the theme Udemy', 'udemy'),
+            'class' => '',
+        ))
+    }
+    ```
+1. Go to ``Dashboard > Appearance > Widgets`` the item should appear. Then drag and drop the widgets in to the sidebar on the right.
+1. Refresh page, but still not there! Well that's because we need to call the function within the template. So let's create a ``sidebar.php`` just like the ``header.php`` and ``footer.php``
+    * Add ``<?php get_sidebar(); ?>`` wherever you would like to call the template. 
+1. Within the ``sidebar.php`` 
+        ```
+        <?php
+
+        if( is_active_sidebar('cu_sidebar') ){
+            dynamic_sidebar('cu_sidebar');
+        }
+        ```
+1. HTML doesn't go well with theme - so we can fix that!
+    * Within the ``widgets.php`` file we can add **four** more keys to the ``register_sidebar`` function. 
+    ```
+    <?php $args = array(
+        'name'          => __( 'My First Theme Sidebar', 'udemy'),
+        'id'            => 'cu_sidebar',
+        'description'   => __( 'Sidebar for the theme Udemy', 'udemy'),
+        'class'         => '',
+        'before_widget' => '<div id="%1$s" class="card %2$s">',
+        'after_widget'  => '</div></div></div>',
+        'before_title'  => '<div class="card-header bg-primary"><span class="card-title">',
+        'after_title'   => '</span></div><div class="card-content"><div class="widget">'
+        )); 
+    ?>
+    ```
+
+####SEARCH BAR
+1. Add ``searchform.php`` file under ``udemy`` theme folder
+1. Add markup:
+    ```
+    <form role="search" method="get" id="searchform" class="searchform" action="<?php echo home_url('/'); ?>">
+        <div class="input-group">
+            <input type="text" placeholder="Search" class="input-sm form-control" name="s" id="search" value="<?php the_search_query(); ?>">
+            <span class="input-group-btn"><button type="button" class="btn btn-sm btn-primary rippler rippler-default btn-flat with-border">
+                <i class="fa fa-search"></i>
+            </span>
+        </div>
+    </form>
+    ```
+1. read more: https://developer.wordpress.org/reference/functions/get_search_form/
+1. Breaking down the search html markup
+    * make sure it's wrapped in ``<form>`` tags and that the **id** and **class** are labeled ``searchform`` so this allows any plugins to hook into this form if needed. 
+        * **method** should always be ``get`` (this is recommended by wordpress)
+        * the **action** attribute should be the **url** to the home page. The ``home_url()`` function is built into wordpress.
+    * The **name** of the ``<input>`` should always be ``s`` - wordpress uses this name called the ``loop`` 
+        * the **id** should be ``search``
+        * the **value** shoule call the built in wordpress function ``the_search_query()``
+
+###The Loop
+1. https://codex.wordpress.org/The_Loop
+1. The Loop is PHP code used by WordPress to display posts. Using The Loop, WordPress processes each post to be displayed on the current page, and formats it according to how it matches specified criteria within The Loop tags. Any HTML or PHP code in the Loop will be processed on each post.
+1. Add **theme support** within the ``functions.php`` file under ``//Set up``
+    ``add_theme_support( 'post-thumbnails' );``
+1. Find within the ``index.php`` (or whatever file) and find the ``<section>`` with the ``id="blog-posts"`` this is where we will want to run **the loop**
+1. Add markup:
+    ```
+    <?php
+
+    if( have_posts() {
+        while(have_posts()) {
+            the_post();
+            ?>
+            <article class="card" ... > //how it is to be rendered
+            <?php>
+        }
+    })
+    ```
+1. On **Dashboard** Within ``Settings > Reading`` set the limit of the "**Blog pages show at most**" to 4 (to set up pagination in a little bit), and chose radio bullet "**Summary**" for this exercise. 
+1. Functons you can use within the loop: https://codex.wordpress.org/Template_Tags such as:
+    * in place of ``<img>`` tags ``<?php the_post_thumbnail(); ?>``
+    * The ``the_post_thubnail()`` function can take two arguments= Size and array of attributes
+        - ``<?php the_post_thumbnail( 'full', array('class => 'img-responsive)); ?>``
+        - https://codex.wordpress.org/Post_Thumbnails
+    * Note not all posts will have images so you should wrap the code with a conditonal ``if()`` statement.
+        ```
+        <?php
+            if( has_post_thumbnail() ) {
+        ?>
+            <div class="card-image">
+                <?php the_post_thumbnail( 'full', array('class => 'img-responsive)); ?>
+            </div>
+        <?php>
+            }
+        ?>
+        ```
 
