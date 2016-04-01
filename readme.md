@@ -278,4 +278,23 @@ Extra notes just in case
     * ``<span class="post-author">by<a href="<php the_author_link(); ?>"><?php the_author(); ?></a></span>``
 1. Excerpt
     * ``<p class="post-excerpt"></p>`` 
-    
+
+###Pagination
+1. https://codex.wordpress.org/Pagination
+    ```
+    <nav class="text-center">
+        <ul class="pagination">
+            <li>
+                <?php previous_posts_link('<i class"fa fa-chevron-left"></i>' ); ?>
+            </li>
+            <li>
+                <?php next_posts_link('<i class"fa fa-chevron-right"></i>' ); ?>
+            </li>
+        </ul>
+    </nav>
+    ```
+
+###Template Hierarchy
+1. https://developer.wordpress.org/themes/basics/template-hierarchy/
+![alt text](https://developer.wordpress.org/files/2014/10/template-hierarchy.png)
+
