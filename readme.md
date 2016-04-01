@@ -76,39 +76,31 @@ Extra notes just in case
 1. Register style:
     *  ``wp_enqueue_scripts`` action ``$handle`` ``$src``
     * https://codex.wordpress.org/Function_Reference/wp_register_style
-```
-    wp_register_style( 'cu_bootstrap', get_template_directory_uri() . '/assets/styles/bootstrap.css');
-```
+    * ``wp_register_style( 'cu_bootstrap', get_template_directory_uri() . '/assets/styles/bootstrap.css');``
 1. Then enqueue the style:
     * ``wp_enqueue_style( 'cu_bootstrap' );``
     * add php to html after ``<title></title>`` tags
-    ```
-    <?php wp_head(); ?>
-    ```
+    * ``<?php wp_head(); ?>``
 1. Add remaining styles and any font urls if needed
 
 ###ADDING SCRIPTS THROUGH HOOKS
 1. Add in html right above closing tags for ``</body>`` and ``</html>``
-```
-<?php wp_footer( ); ?>
-```
+    * ``<?php wp_footer( ); ?>``
     * Add scripts same way as styles by **Registering** them then **Enqueue**
 
 1. **Register**: 
-```    
+    ```
     wp_register_script( 'cu_fastclick', get_template_directory_uri() . '/assets/vendor/fastclick/fastclick.js' );
     wp_register_script( 'cu_bootstrap', get_template_directory_uri() . '/assets/scripts/bootstrap.min.js', array(), false, true );
-```
+    ```
 
 1. **Enqueue** *(note ‘jquery')*:
-```
-wp_enqueue_script( 'jquery’);
-```
+    * ``wp_enqueue_script( 'jquery’);``
     * https://developer.wordpress.org/reference/functions/wp_register_script/
-```
-wp_enqueue_script('cu_fastclick’);
-wp_enqueue_script('cu_bootstrap’);
-```
+    ```
+    wp_enqueue_script('cu_fastclick’);
+    wp_enqueue_script('cu_bootstrap’);
+    ```
 
 ###ADDING DUMMY CONTENT
 1. ``Dashboard > Plugins > Add New > FakerPress``
