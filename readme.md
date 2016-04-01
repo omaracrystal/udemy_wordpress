@@ -92,12 +92,14 @@ Extra notes just in case
 <?php wp_footer( ); ?>
 ```
     * Add scripts same way as styles by **Registering** them then **Enqueue**
+
 1. **Register**: 
 ```    
     wp_register_script( 'cu_fastclick', get_template_directory_uri() . '/assets/vendor/fastclick/fastclick.js' );
     wp_register_script( 'cu_bootstrap', get_template_directory_uri() . '/assets/scripts/bootstrap.min.js', array(), false, true );
 ```
-2. **Enqueue** *(note ‘jquery')*:
+
+1. **Enqueue** *(note ‘jquery')*:
 ```
 wp_enqueue_script( 'jquery’);
 ```
