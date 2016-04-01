@@ -111,24 +111,22 @@ Extra notes just in case
     * https://codex.wordpress.org/Function_Reference/add_theme_support
     * **Setup** under ``functions.php`` > ``add_theme_support( 'menus' );``
     * **create file** under ``includes > setup.php ``
-1. Double underscore __ is a built in function in word press. It allows for text to be translated into various languages. Wordpress comes with function that translates various strings. Double underscore is one of the more common functions to use which takes two arguments:
+1. **Double underscore __** is a built in function in word press. It allows for text to be translated into various languages. Wordpress comes with function that translates various strings. Double underscore is one of the more common functions to use which takes two arguments:
         1. The **string** you would like to translate i.e. ``‘Primary Menu’``
         1. The **text domain** that translation is using. The text domain is basically the name of the theme folder i.e.: ``‘udemy’`` (or see it as an ID)
-```
-function cu_setup_theme () {
-    register_nav_menu( 'primary', __( 'Primary Menu', 'udemy') );
-}
-```
-    - https://developer.wordpress.org/reference/functions/wp_nav_menu/
+    ```
+    function cu_setup_theme () {
+        register_nav_menu( 'primary', __( 'Primary Menu', 'udemy') );
+    }
+    ```
+        * https://developer.wordpress.org/reference/functions/wp_nav_menu/
 1. **Display the menu**
-```
-wp_nav_menu ( array $args = array( ) )
-```
-    - https://developer.wordpress.org/reference/functions/wp_nav_menu/
+    * ``wp_nav_menu ( array $args = array( ) )``
+    * https://developer.wordpress.org/reference/functions/wp_nav_menu/
     *Very powerful and flexible. This function allows us to render the menu wherever we call it in code.*
-``index`` > find ``<nav>`` tags… highlight and replace the ``<ul>`` with ``class="nav navbar-nav”`` :
+    * ``index`` > find ``<nav>`` tags… highlight and replace the ``<ul>`` with ``class="nav navbar-nav”`` :
 
-```
+    ```
     <?php
     wp_nav_menu(array(
         'theme_location' => 'primary',
@@ -136,14 +134,12 @@ wp_nav_menu ( array $args = array( ) )
         'menu_class'     => 'nav navbar-nav'
     ));
     ?>
-```
+    ```
 
 *if left empty default is used*
 1. Refresh page and nothing! Well that’s because we need to let Wordpress know to render it by going to:
-``Appearance > Menus >`` and create a menu > assign **theme location**
-**make sure that within the functions.php the setup.php and any other files are included**
-```
-include( get_template_directory() . '/includes/setup.php' );
-include( get_template_directory() . '/includes/widgets.php' );
-``` 
+    * ``Appearance > Menus >`` and create a menu > assign **theme location**
+    * **make sure that within the functions.php the setup.php and any other files are included**
+    * ``include( get_template_directory() . '/includes/setup.php' );``
+
 
