@@ -249,7 +249,7 @@ Extra notes just in case
         - ``<?php the_post_thumbnail( 'full', array('class => 'img-responsive)); ?>``
         - https://codex.wordpress.org/Post_Thumbnails
     * Note not all posts will have images so you should wrap the code with a conditonal ``if()`` statement.
-        ```
+    ```
         <?php
             if( has_post_thumbnail() ) {
         ?>
@@ -259,5 +259,6 @@ Extra notes just in case
         <?php>
             }
         ?>
-        ```
+    ```
+
 
