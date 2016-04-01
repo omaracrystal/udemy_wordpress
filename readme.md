@@ -341,4 +341,5 @@ Extra notes just in case
     </ul>
 </nav>
 ```
-    **PAGINATION** *note that the previous and next post links are now singular and not plural as listed above (posts vs post)* ``single.php``
+
+***PAGINATION** *note that the previous and next post links are now singular and not plural as listed above (posts vs post)* ``single.php``*
