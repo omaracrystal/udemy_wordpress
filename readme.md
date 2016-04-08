@@ -343,3 +343,74 @@ Extra notes just in case
 ```
 
 * **PAGINATION** *note that the previous and next post links are now singular and not plural as listed above (posts vs post)* ``single.php`` 
+
+###COMMENTS TEMPLATE
+1. In ``single.php`` add this code below the ``</nav>`` = ``<?php comments_template(); ?>``
+1. This above php function looks for a file called ``comments.php`` create that file now. 
+1. Add in ``comments.php`` this code: The single _e just outputs the translated string whereas double __e will return the translated string to the language defined in wp-config.php
+    ```
+    <?php 
+
+    if(comments_open()) {
+
+    }else{
+        _e('Comments are closed', 'udemy' );
+    }
+    ```
+1. Within the if statement past the html markup of the comment form (remmember to close out php beore doing this and initiating it again for the else statement) such as:
+```
+    <?php
+if(comments_open()) {
+?>
+
+    <h4>Leave a comment</h4>
+    <form action="<php eco site_url('wp-comments-posts.php'); ?>" method="post" id="commentform">
+        <input type="hidden" name="comment_post_ID" value="<?php echo $post->ID; ?>" id="comment_post_ID"></input>
+        <div class="form-group">
+            <label>Name / Alias (required)</label>
+            <input type="text" name="author" class="form-control"></input>
+        </div>
+        <div class="form-group">
+            <label>Email Address (required, not shown)</label>
+            <input type="text" name="email" class="form-control"></input>
+        </div>
+        <div class="form-group">
+            <label>Website (optional)</label>
+            <input type="text" name="url" class="form-control"></input>
+        </div>
+        <div class="form-group">
+            <label>Comment</label>
+            <textarea rows="7" cols="60" name="comment" class="form-control"></textarea>
+        </div>
+        <div class="form-group">
+            <button type="submit" class="btn btn-primary">Add Comment</button>
+        </div>
+    </form>
+
+<?php
+}else{
+    _e('Comments are closed', 'udemy' );
+}
+```
+1. Adjust the markup to be wordpress compatible:
+1. Within the ``<form>`` you need to set the action and **method** attributes. Action being **post** and action being the **url**
+1. Next look at the input fields - the most important part is the name of the input field.
+1. Also take note of ``$post`` in first input above. Here is a link to documentation: https://codex.wordpress.org/Function_Reference/$post which= "Contains data from the current post in The Loop."
+1. The above form should now work, however we still need to add logic to output it to the DOM
+1. Above all this code (above) include this comment wrapper=
+```
+    <div class="comments-wrap">
+    <?php
+    foreach($comments as $comment) {
+        ?>
+        <h4><a href="<?php comment_author_url(); ?>"<?php comment_author(); ?></a> - <small><?php comment_date(); ?></small></h4>
+        <div class="comment-body">
+            <p><?php comment_text(); ?></p>
+        </div>
+        <?php
+    }
+    ?>
+    </div>
+```
+
+
