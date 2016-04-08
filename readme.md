@@ -204,6 +204,7 @@ Extra notes just in case
 ####SEARCH BAR
 1. Add ``searchform.php`` file under ``udemy`` theme folder
 1. Add markup:
+
     ```
     <form role="search" method="get" id="searchform" class="searchform" action="<?php echo home_url('/'); ?>">
         <div class="input-group">
@@ -214,6 +215,7 @@ Extra notes just in case
         </div>
     </form>
     ```
+
 1. read more: https://developer.wordpress.org/reference/functions/get_search_form/
 1. Breaking down the search html markup
     * make sure it's wrapped in ``<form>`` tags and that the **id** and **class** are labeled ``searchform`` so this allows any plugins to hook into this form if needed. 
@@ -413,4 +415,36 @@ if(comments_open()) {
     </div>
 ```
 
+
+##PAGE TEMPLATE
+1. create file in themes > udemy > ``page.php``
+1. copy and paste info from single.php into this new folder
+1. https://codex.wordpress.org/Theme_Development#Pages_.28page.php.29
+1. Include the main things and done
+
+##404 Page
+1. create file ``404.php``
+1. Copy code from ``page.php`` and paste into the ``404.php``
+1. Get rid of loop completely
+1. Get rid of side-bar
+1. Change ``class="col-sm-8"`` to ``"col-sm-12"`` on ``<section>`` tag
+1. Customize template - done!
+```
+    <?php get_header(); ?>
+        <section id="blog" class="section">
+            <div class="container">
+                <section id="blog-posts" class="col-sm-12">
+                    <article class="card">
+                        <div class="card-content">
+                            <h1 class="text-center text-danger">
+                                <i class="fa fa-frown-o"></i> <br>
+                                <?php _e('404! Page not found!', 'udemy' ); ?>
+                            </h1>
+                        </div>
+                    </article>
+                </section>
+            </div>
+        </section>
+    <?php get_footer(); ?>
+```
 
