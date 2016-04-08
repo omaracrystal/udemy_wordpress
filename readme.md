@@ -422,7 +422,7 @@ if(comments_open()) {
 1. https://codex.wordpress.org/Theme_Development#Pages_.28page.php.29
 1. Include the main things and done
 
-##404 Page
+##404 PAGE
 1. create file ``404.php``
 1. Copy code from ``page.php`` and paste into the ``404.php``
 1. Get rid of loop completely
@@ -448,3 +448,28 @@ if(comments_open()) {
     <?php get_footer(); ?>
 ```
 
+##CATEGORY TEMPLATE
+1. create file ``category.php``
+1. copy and paste from ``index.php`` into ``category.php``
+1. refresh page to see the category widget appear on the sidebar
+1. On Dashboard go into one of the posts - on the right hand sidebar column you'll see Categories - add a new category then select it > update
+1. This will then display posts by category
+
+
+##SEARCH TEMPLATE
+1. https://codex.wordpress.org/Theme_Development#Search_Results_.28search.php.29
+1. create ``search.php`` file
+1. Key code within "card" class div tags from index.php template:
+```
+    <div class="card-content">
+        <h3><?php _e('Search', 'udemy'); ?></h3>
+        <?php get_search_form(); ?>
+        <hr>
+        <h4>
+            <?php _e('Search Results for', 'myfirsttheme'); ?>:
+            <span class="text-info"><?php the_search_query(); ?></span>
+        </h4>
+    </div>
+```
+
+##
