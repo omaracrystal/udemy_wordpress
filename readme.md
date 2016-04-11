@@ -472,4 +472,98 @@ if(comments_open()) {
     </div>
 ```
 
-##
+##CUSTOM TEMPLATES
+1. create php template whatever you want ``name-of-template.php``
+1. add file header within comments after ``<?php`` tag
+```
+/*
+    * Template Name: Name of Template
+*/
+```
+
+##Title
+1. ``<title><?php wp_title(); ?></title>``
+2. in ``functions.php`` file add ``add_theme_support('title-tag');``
+3. Change logo, you can use ``<?php bloginfo(); ?>`` This function takes in a string which is what piece of information we want. Go to https://developer.wordpress.org/reference/functions/bloginfo/ for parameter suggestions. 
+
+##WORDPRESS APIs
+1. https://codex.wordpress.org/WordPress_APIs
+2. Available for plugins and or themes
+3. in ``functions.php`` add a hook ``add_action( 'after_switch_theme', 'cu_activate')
+4. Within the   ``includes.php`` folder create a file ``activate.php`` add a function for ``cu_activate`` :
+    ```
+    function cu_activate () {
+        if( version_compare( get_bloginfo( 'version' ), '4.2, '<' ) {
+            wp_die(__('You must have a minimum version of 4.2 to use this theme.') );
+        }
+        //add theme options api (see below)
+    }
+    ```
+5. Include the above file withing the ``function.php`` file:
+    ``include( get_template_directory() . '/includes/activate.php' );``
+6. Both ``version_compare()`` vs ``compare()`` and ``get_bloginfo`` vs ``bloginfo()`` are built in Wordpress functions. The ``get`` will return the value and the no get function will output the value. This is the first perameter for the ``cu_activate`` function. Second perameter is the minimum value of the version. The third perameter is the comparitive operator "<" less than. ``wp_die`` kills the script and outputs message
+7. Activate it by switching the Appearance theme on the Dashboard from one back to the original. 
+
+###OPTIONS API
+1. https://codex.wordpress.org/Options_API
+2. What is it? The Options API is a simple and standardized way of storing data in the database. The API makes it easy to create, access, update, and delete options. All the data is stored in the wp_options table under a given custom name. This page contains the technical documentation needed to use the Options API. A list of default options can be found in the Option Reference.
+3. within the ``activate.php`` file add theme options then test to make sure their aren't any errors by toggling themes within Apperance. Then test one last time in phpMyAdmin, from there navigate to ``wp_options`` table under "structure" tab. Navigate to the last row in the table to see the "option_name" have the one you just created "cu_opts"
+    ```
+    function cu_activate () {
+        if( version_compare( get_bloginfo( 'version' ), '4.2, '<' ) {
+            wp_die(__('You must have a minimum version of 4.2 to use this theme.') );
+        }
+        $theme_opts         =   get_option( 'cu_opts' );
+
+        if( !$theme_opts ){
+            $opts           = array(
+                'facebook'  =>  '',
+                'twitter'   =>  '',
+                'youtube'   =>  '',
+                'logo_type' =>  1,
+                'logo_img'  =>  '',
+                'footer'    =>  ''
+            );
+
+            add_option( 'cu_opts', $opts );
+
+        }
+    }
+    ```
+
+###ADDING A MENU PAGE TO WORDPRESS ADMIN
+1.  ``add_menu_page`` : https://developer.wordpress.org/reference/functions/add_menu_page/
+2.  It is recommended to use the hook ``admin_menu`` so in ``functions.php`` : ``add_action( ('admin_menu', 'ju_admin_menus' ) );
+3.  Create ``admin`` folder within the ``includes`` folder and add the file ``menus.php``
+4.  Then include the file within the ``functions.php`` file : ``include( get_template_directory() . '/includes/admin/menus.php' );``
+5.  Within the ``menus.php`` file add the function ``add_menu_page`` which takes the following parameters: (title of this page, name that appears in sidebar, capability = : https://codex.wordpress.org/Roles_and_Capabilities (what a user can and can't do) (6 defaults roles and you can view the "Capabiliy vs Role" section under contents) ). Forth parameter is menu_slug basically the url - should be unique. The 5th paramenter is the function that will be called.
+    ```
+    <?php
+
+    function ju_admin_menus(){
+        add_menu_page(
+            'Udemy_Theme_Options',
+            'Theme_Options',
+            'edit_theme_options',
+            'cu_theme_opts',
+            'cu_theme_opts_page',
+        )
+    }
+    ```
+6. For the 5th parameter we need the file that matches. Create a file ``options-page.php`` under the ``admin`` folder
+7. Next include the file in ``functions.php`` = ``include( get_template directory( . '/includes/admin/options-page.php'))``
+8. Last let's define the function within the ``options-page.php`` file: 
+    ```
+    <?php
+    function cu_thme_opts_page(){
+    ?>
+        <div class="wrap">
+        </div>
+    <?php
+    }
+    ?>
+    ```
+
+
+
+
