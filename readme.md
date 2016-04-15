@@ -565,8 +565,50 @@ if(comments_open()) {
     ```
 
 ###Enqueueing Styles and Scripts in the Admin
-1. 
+1. Wordpress have two enque hooks, one for the front end and one for the backend. As of right now ``bootstrap`` isn't loading in the admin side of wordpress. 
+2. In ``functions.php`` add the hook ``add_action( 'admin_init', 'cu_admin_init' );`` It is important to call this action AFTER the ``add_action( 'admin_menu', cu_admin_menus' );`` hook. 
+3. Create a new file ``init.php`` within the ``admin`` folder under ``includes`` folder
+4. Within the ``init.php`` file define the ``cu_admin_init()`` function:
+    ```
+    function cu_admin_init() {
+        include( 'enqueue.php' );
+        add_action( 'admin_enque_scripts', 'cu_admin_enqueue' );
+    }
+    ```
+5. Create a file ``enqueue.php`` within ``admin`` folder. Within the function you see we included this file. 
+6. In ``enqueue.php`` we add:
+    ```
+    function cu_admin_enqueue() {
+        if(!isset($_GET['page']) || $_GET['page'] != "cu_theme_opts"){
+            return;
+        }
+        wp_register_style( 'cu_bootstrap', get_template_directory_uri() . '/assets/styles/bootstrap.css');
+        wp_enqueue_style( 'cu_bootstrap' );
 
+        wp_register_script( 'cu_options', get_template_directory_uri() . '/assets/scripts/cu_options.js');
+        wp_enqueue_script( 'cu_options' );
+    }
+    ```
+7. The if statement above queries the url string - refresh page and make sure no errors are in console.
 
-
+##Setting Up a Form in the Admin
+1. https://codex.wordpress.org/Function_Reference/wp_nonce_field
+2. The following markup can be found in admin > options-page.php
+3. The function ``cu_theme_opts_page ()`` wraps the markup
+4. Note the following: 
+    * Form ``input`` value for each option created when the theme was activated
+    * All text is translatable with the ``_e()``function
+    * The name attribute for each ``input`` is prefixed with ``cu``
+5. How do you get forms to submit correctly? Within the ``<form>`` tag add ``<form method="post" action="admin-post.php">`` 
+6. Two problems to face: 
+    * Not the only one posting to ``admin-post.php`` 
+        - answer = create a hidden ``input`` field under the ``<form>`` tag that wordpress will search for:
+        - ``<input type="hidden" name="action" value="cu_save_options">``
+    * XSS injections = The form can be easily recreated and submitted without permission
+        - answer = create a field with a unique key that is created when we visit this page. Then we can validate this key when the form is submitted. Wordpress provides some functions for this:
+        - See link above for ``wp_nonce_field()`` it protects by checking that the form request came from the current site and not somewhere else. It protects in most cases. Nonce stands for **once** a key is generated once everytime. 
+        - Add beneath the ``hidden`` input field:
+        - ``<?php wp_nonce_field('cu_options_verify'); ?>``
+        - refresh page and check in console to see if the ``id='_wpnonce'`` is generated to make sure it worked
+    7. 
 
