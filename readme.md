@@ -557,12 +557,15 @@ if(comments_open()) {
     <?php
     function cu_thme_opts_page(){
     ?>
-        <div class="wrap">
+        <div class="wrap"> //boostrap class
+            <h1>Hello!</h1>
         </div>
     <?php
     }
-    ?>
     ```
+
+###Enqueueing Styles and Scripts in the Admin
+1. 
 
 
 
