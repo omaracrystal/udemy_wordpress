@@ -1,3 +1,7 @@
+<?php
+    $theme_opts         =         get_option('cu_opts');
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -23,7 +27,13 @@
 <nav class="navbar navbar-inverse">
     <div class="container">
         <div class="navbar-header">
-            <a class="navbar-brand rippler" href="index.html">Udemy</a>
+            <?php
+            if($theme_opts['logo_type'] == 1){
+                ?><a class="navbar-brand rippler" href="index.html"><?php bloginfo( 'name' );?></a><?php
+            }else{
+                ?><a class="navbar-brand rippler" href="index.html"><img src="<?php echo $theme_opts( 'logo_img' );?></a><?php
+            }
+            ?>
         </div>
         <div id="navbar" class="collapse navbar-collapse">
             <?php
@@ -34,9 +44,17 @@
             ));
             ?>
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-                <li><a href="#"><i class="fa fa-facebook"></i></a></li>
-                <li><a href="#"><i class="fa fa-youtube"></i></a></li>
+                <?php
+                if(!empty( $theme_opts['twitter'] ) ) {
+                    ?><li><a href="https://twitter.com/<?php echo $theme_opts['twitter']; ?>"><i class="fa fa-twitter"></i></a></li><?php
+                }
+                if(!empty( $theme_opts['facebook'] ) ) {
+                    ?><li><a href="https://facebook.com/<?php echo $theme_opts['twitter']; ?>"><i class="fa fa-facebook"></i></a></li><?php
+                }
+                if(!empty( $theme_opts['youtube'] ) ) {
+                    ?><li><a href="https://youtube.com/user/<?php echo $theme_opts['twitter']; ?>"><i class="fa fa-youtube"></i></a></li><?php
+                }
+                ?>
             </ul>
         </div>
     </div>

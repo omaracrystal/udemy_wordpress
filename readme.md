@@ -610,5 +610,188 @@ if(comments_open()) {
         - Add beneath the ``hidden`` input field:
         - ``<?php wp_nonce_field('cu_options_verify'); ?>``
         - refresh page and check in console to see if the ``id='_wpnonce'`` is generated to make sure it worked
-    7. 
 
+##Saving our Settings
+1. https://codex.wordpress.org/Plugin_API/Action_Reference/admin_post_(action)
+1. ``action_post_(action)`` :
+    ```
+    This hook allows you to create custom handlers for your own custom GET and POST requests. The admin_post_ hook follows the format "admin_post_$youraction", where $youraction is your GET or POST request's 'action' parameter.
+    ```
+1. We created this function before in ``value="cu_save_options"``
+1. Within the file ``init php`` add: ``add_action( 'admin_post_cu_save_options', 'cu_save_options' );`` > you don't have to call it the same name, but it helps to name it consistently to not run into any confusion. (*Note: doesn't need to be called in ``functions.php``)
+1. For files that store data we will make a new folder under the theme ``udemy`` called ``process`` (this is not required by wordpress, but is recommended to stay more organized)
+1. Create file ``save-options.php`` within the ``process`` folder and define the function ``cu_save_options``:
+1. Now we need to include the file, however we are not going to include it in the ``init.php`` function, but in the ``functions.php`` file: ``include( get_template_directory() . '/includes/save-options.php' );``
+1. In ``save-options.php`` add the function to test:
+    ```
+    function cu_save_options() {
+        echo '<pre>';
+        print_r($_POST);
+        die();
+    }
+    ```
+1. Refresh page to see the form within the admin dashboard under Theme Options
+1. Fill out form, submit it, you should see the data being returned
+1. Final two steps to make sure the form is being submited by a trusted user:
+    * Check user's current capabilities. 
+        - Add condition if statement to the ``cu_save_options`` function, and use Wordpress built in function: ``current_user_can( )`` - it will check that current user's capabilities to see if they are able to perform a certain cabability you assign to that user. 
+        - Adding the built in Wordpress function ``check_admin_referer`` will check the Nonce function ``cu_options_verify`` and the page that was referred. (don't put in conditional statement)
+        - We now start processing the form data and save it under this function. Pull the form that we will override. First option to update is the Twitter option (equivilant to the name field of that field = ``cu_inputTwitter)``. We add the function ``sanitize_text_field`` to remove any ``<html>`` where malicious code be and leave only text.
+        - The ``absint()`` function returns an integer and is an absolulte value
+        - For the footer because we don't want to sanitize the data, we would like to allow html markup - do not include this function. But it's important to know that the **options api** will sanitize info anyway. This will get us a weird result. 
+        - ``updation_options()`` and ``wp_redirect( admin_url('*checks for status and redirects to the status page*') )`` to close out the saving form
+```
+    function cu_save_options() {
+        if( !current_user_can( 'edit_theme_options' ) ){
+            wp_die(__('You are not allowed to be on this page.') );
+        }
+
+        check_admin_referer( 'cu_options_verify' );
+
+        $opts               =   get_option( 'cu_opts' );
+        $opts['twitter']    =   sanitize_text_field($_POST( 'cu_inputTwitter'));
+        $opts['facebook']    =   sanitize_text_field($_POST( 'cu_inputFacebook'));
+        $opts['youtube']    =   sanitize_text_field($_POST( 'cu_inputYoutube'));
+        $opts['logo_type']    =   absint( $_POST('ju_inputLogoType') );
+        $opts['footer']    =   $_POST('cu_inputFooter');
+
+        update_option( 'cu_opts', $opts );
+        wp_redirect( admin_url('admin.php?page=cu_theme_opts&status=1') ); 
+    }
+```
+
+** Now we face 3 more problems:**
+    1. Fields not showing updated values
+    2. No successs message for users
+    3. Can't upload logos
+
+##Displaying the Updated Setting Values
+1. Displaying the options and values. First we assigne the variable ``$theme_opts``  to the ``get_option('ju_opts')``. Within ``save-options.php`` add:
+    ```
+    <?php
+    function ju_theme_opts_page(){
+        $theme_opts             =       get_option( 'cu-opts' );
+    }
+    ?>
+    ```
+1. Now we set the ``value`` fields for each corresponding key in our options input: ``value="<?php echo $theme_opts[ 'twitter' ] ?>"`` etc. etc
+1. Add condititional for the logo type: ``<option value="2"><?php echo $theme_opts['logo_type'] == 2 ? 'SELECTED' : ''; ?><?php _e('Image', 'udemy'); ?></option>``
+1. For the footer area add: ``  <textarea class="form-control" name="cu_inputFooter"><?php echo $theme_opts['footer']; ?></textarea>``
+1. *Note after refresing page there is a problem with the some characters... the ``test<a href=\"#">test</a>``  The options api will santize the data. To solve this issue we add the function ``stripsslashes_deep( )`` : `` <textarea class="form-control" name="cu_inputFooter"><?php echo stripslashes_deep($theme_opts['footer']); ?></textarea>`` now the new information in the form after saving is this: ``test<a href="#">test</a>``
+1. Last we want a success message to display once the form is saved. Above the ``<form method="post"...`` add:
+    ```
+     <?php
+        if(isset($_GET['statue']) && $_GET['status'] == 1) {
+            ?>
+            <div class="alert alert-success">Success!</div>
+            <?php
+        }
+    ?>
+    ```
+1. Refresh page to see success message
+
+##Uploading Logo Image with the Media Uploader
+1. https://codex.wordpress.org/Data_Validation
+1. First we need to **enqueue** it within the ``admin > enqueue.php`` file: ``wp_enqueue_media( );`` This media uploader is a modal that appears on an event.
+1. Now we can go to ``options-page.php`` and grab two important variables to call in order to fire this function through an event: **name** and **id** 
+1. With the **name**:``cu_inputLogoImg`` and **id** : ``cu_uploadLogoImgBtn`` in ``assets > scripts > options.js`` file we add (file is already enqueue):
+    ```
+    jQuery(function($){
+        var frame = wp.media({
+            title: Select or upload logo',
+            button: {
+                text: 'Use this media'
+            },
+            multiple: false
+        });
+
+        $('#cu_uploadLogoImgBtn').on('click', function(e){
+            e.preventDefault();
+            frame.open();
+        })
+
+        frame.on('select', function() {
+            var attachment = frame.state().get('selection').first().toJSON();
+            $('input[name=cu_inputLogoImg]').val(attachment.url); 
+        })
+    });
+    ```
+1. We want to make sure this uploaded image is saved. So in the ``save-options.php`` folder we are going to add this parameter: ``$opts['logo_img']   =   esc_url_raw($_POST('cu_inputLogoImg'));`` here we also added the sanatizer ``esc_url_raw()`` 
+1. Finally we want to include this variable within the ``options-page.php`` by adding the value to the imput for the logo = (line 46) : ``value="<?php echo $theme_opts['logo_img']; ?>"``
+
+##Finalizing the front end and using the options API
+1. Start using the options on the frontend. Within ``header.php`` file we will add the php code to call the options ``<?php $theme_opts = get_option('cu_opts'); ?>``
+1. Add conditional statement right before the ``<li>`` tags to make sure that the following fields were not empty and to display the social icons correctly with the correct corresponding links. ie:
+    ```
+     <?php 
+        if(!empty( $theme_opts['twitter'] ) ) {
+            ?><li><a href="https://twitter.com/<?php echo $theme_opts['twitter']; ?>"><i class="fa fa-twitter"></i></a></li>
+        }
+    ?>
+    ```
+1. Next in ``footer.php`` we want to do the same thing:
+    ```
+    <footer class="footer">
+    <div class="container">
+       <?php
+           theme_opts   =      get_option('cu_opts');
+           echo stripcslashes_deep($theme_opts['footer']);
+       ?>
+    </div>
+    </footer>
+
+    <?php wp_footer( ); ?>
+    </body>
+    </html>
+    ```
+1. Within the ``header.php`` we add the conditional to look for the logo image
+    ```
+     <div class="navbar-header">
+        <?php
+        if($theme_opts['logo_type'] == 1){
+            ?><a class="navbar-brand rippler" href="index.html"><?php bloginfo( 'name' );?></a><?php
+        }else{
+            ?><a class="navbar-brand rippler" href="index.html"><img src="<?php echo $theme_opts( 'logo_img' );?></a><?php
+        }
+        ?>
+    </div>
+    ```
+
+#Creating Plugins
+
+##What are Plugins?
+1. Code that extends the core of WordPress
+1. How does Wordpress load plugins?
+    1. Configuration File is loaded
+    2. Functions and Classes loaded
+    3. Plugins are loaded
+    4. Process all code and requests
+    5. Load Translations
+    6. Load Theme
+    7. Load Page Content
+1. https://codex.wordpress.org/Editing_wp-config.php Most important and the heart of the Wordpress site is the ``wp-config.php`` file - contains all the core settings such as: database login details, security hashes/ salts, and other various settings you can set
+1. The default settings are fine for this particular site as it stands. Just change one thing. line 80: change false to true for WP_DEBUG ``define('WP_DEBUG', true)`` It is recommended to always to set this up during the development phase, then place it back to **false** during **production** 
+
+##Creating a Plugin File Header
+1. Create a sub-folder ``recipe`` within the ``plugins`` folder under ``wp-content`` Then add ``index.php`` (or name it after the folder) file to that folder
+1. Add a File Header in this file and then refresh to see the plugin appear on the Dashboard under Plugins: https://codex.wordpress.org/File_Header (finish adding header information that you would want)
+    ```
+    <?php
+    /**
+     - Plugin Name: Recipe
+     */
+    ```
+
+##Activating Our Plugin
+1. (make sure it's not activated before adding the following)
+1. Within the recipe > index.php we set up 4 things: Setup, Includes, Hooks and Shortcodes: 
+    ```
+    // Setup
+
+    // Includes
+
+    // Hooks
+
+    // Shortcodes
+    ```
+1. Under **Hooks** section we add ``register_activation_hook()`` this function is called when the plugin is activated. 

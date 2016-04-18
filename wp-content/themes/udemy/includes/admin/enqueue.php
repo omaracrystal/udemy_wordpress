@@ -8,5 +8,6 @@ function cu_admin_enqueue() {
     wp_enqueue_style( 'cu_bootstrap' );
 
     wp_register_script( 'cu_options', get_template_directory_uri() . '/assets/scripts/cu_options.js');
+    wp_enqueue_media( );
     wp_enqueue_script( 'cu_options' );
 }

@@ -1,6 +1,9 @@
 <footer class="footer">
     <div class="container">
-        Powered by <a href="http://getbootstrap.com/" target="_blank">Bootstrap</a><span class="dot"></span>Made with <i class="fa fa-heart text-danger"></i> by <a href="#" target="_blank">Jack</a>
+       <?php
+           theme_opts   =      get_option('cu_opts');
+           echo stripcslashes_deep($theme_opts['footer']);
+       ?>
     </div>
 </footer>
 
