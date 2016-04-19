@@ -882,8 +882,59 @@ if(comments_open()) {
 1. The two parameters **plugins_url( $path, $plugin);**
     - **$path** the direct path realitive to this file
     - **$plugin** the location of the plugin. You can use ``__FILE__`` or ``dirname(__FILE__)`` for nested folders. There is a more dynamic and easier way to include this though. Under **includes > index.php** under **Setup** add ``define('RECIPE_PLUGIN_URL', __FILE__ );`` Now we don't have to worry about nesting. We can just use the constant **RECIPE_PLUGIN_URL**
+1. There is one last thing, we only want these assests to appear on our post type pages. Since this is a post type, we can take advantage of a **gobal** variable called **$typenow;**. This variable is created by Wordpress and the value is set to current to post type the user is in. This variable is only available in the **admin** side of Wordpress. So we simply check to see if this variable is set to Recipe. If it isn't we want to exit the function so no styles are loaded. 
     ```
-    
+    function cu_admin_enqueue() {
+        golbal $typenow;
+
+        if( $typenow !== 'recipe' ) {
+            return;
+        }
+
+        wp_register_style( 'cu_bootstrap', plugins_url( '/assets/styles/bootstrap.css', RECIPE_PLUGIN_URL ));
+        wp_enqueue_style( 'cu_bootstrap' );
+    }
     ```
-    
+
+
+##Working with Meta Data
+1. First let add some form markup with boostrap to the **admin > recipe-options** folder.
+1. Save and refresh to see this form appear in the admin dashboard
+1. Next create a hook within the recipe > index.php that will save the forms information... ``add_action( 'save_post_recipe', 'cu_save_posts_admin', 10, 3 );`` 
+    - notice the 3rd and 4th parameters. The **10** is the number of priority (order of being fired) -- (this is also the default) and the **3** is the number of arguments are sent to our function. What does this actual mean? Well, action hooks can provide our functions with extra information about the action currently happening. Not every action provides this but the **save_post()** does. By default this value is always **1**, however, the **save_post()** hook provides three arguments. So we set it to **3**.
+1. Create a folder called ``process``. Just like last time we want to keep all file that process data in a seperate folder. Create a file called **save-post.php** within this folder and define the **cu_save_post_admin( $post_id, $post, $update )** function here which takes **3** arguments. 
+1. First check if **$update** is **false** which mean the post is **new**
+1. Second lets test to see what is being pulled from the form by publishing this function within cu_save_post_admin:
+    ```
+    function cu_save_post_admin( $post_id, $post, $update ){
+        if(!$update) {
+            return;
+        } 
+
+        echo '<pre>';
+        print_r($_POST);
+        die();
+    }
+    ```
+1. You will notice alot of information being pulled. Scroll towards the bottom to review the **meta data** being: ~ ``['cu_inputIngredients, cu_inputTime, cu_Utensils, cu_inputLevel, cu_inputMealType']`` ~ Now that we can see the data being sent - we can **processes it and save it**
+1. We can now create an array of how to pull this information then finally attach this data to the post by using the built in function and pass through **3** arguments **update_post_meta( $post_id, 'unique key', $value_of_meta_data );**
+    - https://codex.wordpress.org/Function_Reference/update_post_meta
+    - **update_post_meta( $post_id, 'recipe_data', $recipe_data );**
+1. Save and refesh - you will see that after publishing it saves but the fields don't contain the meta-data though. So lets change that:
+1. We go into the **meta box** ``process > recipe-options.php`` to pass ``$post`` into the function. This **$post** argument is an object that holds properties related to the current post. Some of these properties include in this order:
+    - 1. the **ID** ``$post->ID``
+    - 2. **Name of the meta data's key** ``'recipe_data'`` 
+    - 3. The third value is sort of odd. You can pass in an list or a single item. Arrays count as a single item. 99% of the time you want this parameter to be **true**
+    - Add this variable to the **meta box** = ``$recipe_data = get_post_meta( $post->ID, 'recipe_data', true );``
+    - FINALLY we set up all the **input's values** to the corresponding values... such as: 
+```
+    <option value="Beginner" <?php echo $recipe_data['level'] == "Beginner" ? 'SELECTED' : '' ?>>Beginner</option>
+    <option value="Intermediate" <?php echo $recipe_data['level'] == "Intermediate" ? 'SELECTED' : '' ?>>Intermediate</option>
+    <option value="Expert" <?php echo $recipe_data['level'] == "Expert" ? 'SELECTED' : '' ?>>Expert</option>
+```
+1. Next in ``process > recipe-options.php`` you 
+
+
+
+
 

@@ -27,6 +27,7 @@ include( 'includes/index.php' );
 register_activation_hook( _FILE_, 'cu_activate_plugin' );
 add_action( 'init', 'recipe_init' );
 add_action( 'admin_init', 'recipe_admin_init' );
+add_action( 'save_post_recipe', 'cu_save_posts_admin', 10, 3 );
 
 // Shortcodes
 
