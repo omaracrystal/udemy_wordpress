@@ -1,0 +1,310 @@
+//
+// Buttons
+// --------------------------------------------------
+.btn {
+	.transition(all ease .4s);
+	border: none;
+	text-transform: uppercase;
+	font-weight: 400;
+	//padding: 5px 15px;
+	min-width: 40px;
+	text-align: center;
+	&:hover {
+		z-index: 2;
+	}
+}
+
+// Btn Link
+// --------------------------------------------------
+.btn-link {
+	&:hover {
+		.z-depth-3;
+	}
+	&.text-primary {
+		&:hover {
+			color: @brand-primary;
+		}
+	}
+	&.text-success {
+		&:hover {
+			color: @brand-success;
+		}
+	}
+	&.text-info {
+		&:hover {
+			color: @brand-info;
+		}
+	}
+	&.text-warning {
+		&:hover {
+			color: @brand-warning;
+		}
+	}
+	&.text-danger {
+		&:hover {
+			color: @brand-danger;
+		}
+	}
+	&.text-inverse {
+		&:hover {
+			color: @brand-inverse;
+		}
+	}
+}
+
+// Btn Groups
+// --------------------------------------------------
+.button-group {
+	.fa-close {
+		display: none;
+	}
+	&.open {
+		.@{fa-css-prefix} {
+			display: none;
+		}
+		.fa-close {
+			display: block;
+		}
+	}
+}
+
+// Inverse
+// --------------------------------------------------
+@brand-inverse:         			#333;
+@btn-inverse-color:               	#fff;
+@btn-inverse-bg:                  	@brand-inverse;
+@btn-inverse-border:              	#000;
+
+.btn-inverse {
+  .button-variant(@btn-inverse-color; @btn-inverse-bg; @btn-inverse-border);
+}
+
+// Oval
+// --------------------------------------------------
+.btn-oval {
+  	.border-top-radius(50px);
+  	.border-bottom-radius(50px);
+  	padding-left: 18px;
+  	padding-right: 18px;
+}
+
+// Square
+// --------------------------------------------------
+.btn-square {
+  	.border-top-radius(0);
+  	.border-bottom-radius(0);
+}
+
+
+// Raised
+// --------------------------------------------------
+.btn-raised {
+  	.z-depth-1;
+	border: none;
+	&.btn-default {
+	    &:hover {
+		    background-color: @btn-default-bg;
+	    }
+	}
+	&.btn-primary {
+	    &:hover {
+		    background-color: @brand-primary;
+	    }
+	}
+	&.btn-danger {
+	    &:hover {
+		    background-color: @brand-danger;
+	    }
+	}
+	&.btn-warning {
+	    &:hover {
+		    background-color: @brand-warning;
+	    }
+	}
+	&.btn-info {
+	    &:hover {
+		    background-color: @brand-info;
+	    }
+	  }
+	&.btn-success {
+	    &:hover {
+		    background-color: @brand-success;
+	    }
+	}
+	&.btn-inverse {
+	    &:hover {
+		    background-color: @brand-inverse;
+	    }
+	}
+	&:hover {
+		.z-depth-3;
+	}
+}
+
+// Raised
+// --------------------------------------------------
+.btn-flat {
+	border: none;
+	&.btn-default {
+	    &:hover {
+		    background-color: @btn-default-bg;
+	    }
+	}
+	&.btn-primary {
+	    &:hover {
+		    background-color: @brand-primary;
+	    }
+	}
+	&.btn-danger {
+	    &:hover {
+		    background-color: @brand-danger;
+	    }
+	}
+	&.btn-warning {
+	    &:hover {
+		    background-color: @brand-warning;
+	    }
+	}
+	&.btn-info {
+	    &:hover {
+		    background-color: @brand-info;
+	    }
+	  }
+	&.btn-success {
+	    &:hover {
+		    background-color: @brand-success;
+	    }
+	}
+	&.btn-inverse {
+	    &:hover {
+		    background-color: @brand-inverse;
+	    }
+	}
+	&:hover {
+		.z-depth-3;
+	}
+}
+
+// Rounded
+// --------------------------------------------------
+.btn-round {
+  	width: 55px;
+  	height: 55px;
+  	text-align: center;
+  	position: relative;
+  	.border-radius(100%);
+  	font-size: 16px;
+  	padding: 0;
+  	i {
+	  	line-height: 59px;
+	  	font-size: 18px;
+	  	font-weight: normal;
+  	}
+  	&:hover {
+	  	.z-depth-3;
+  	}
+  	.ripple-effect {
+	  	.border-radius(100%);
+  	}
+}
+
+// Transparent
+// --------------------------------------------------
+.btn-transparent {
+  &:hover {
+    color: #fff !important;
+  }
+  &.btn-default {
+	background-color: transparent;
+    &:hover {
+	    background-color: @btn-default-border;
+    }
+  }
+  &.btn-primary {
+  	background-color: transparent;
+    color: @btn-primary-bg;
+    border-color: @btn-primary-bg;
+    &:hover {
+	    background-color: @brand-primary;
+    }
+  }
+  &.btn-danger {
+  	background-color: transparent;
+    color: @btn-danger-bg;
+    border-color: @btn-danger-bg;
+    &:hover {
+	    background-color: @brand-danger;
+    }
+  }
+  &.btn-warning {
+  	background-color: transparent;
+    color: @btn-warning-bg;
+    border-color: @btn-warning-bg;
+    &:hover {
+	    background-color: @brand-warning;
+    }
+  }
+  &.btn-info {
+  	background-color: transparent;
+    color: @btn-info-bg;
+    border-color: @btn-info-bg;
+    &:hover {
+	    background-color: @brand-info;
+    }
+  }
+  &.btn-success {
+  	background-color: transparent;
+    color: @btn-success-bg;
+    border-color: @btn-success-bg;
+    &:hover {
+	    background-color: @brand-success;
+    }
+  }
+  &.btn-inverse {
+  	background-color: transparent;
+    color: @btn-inverse-bg;
+    border-color: @btn-inverse-bg;
+    &:hover {
+	    background-color: @brand-inverse;
+    }
+  }
+}
+
+
+// Turnable
+// --------------------------------------------------
+.btn-turn-primary {
+  &:hover {
+    .button-variant(@btn-primary-color; @btn-primary-bg; @btn-primary-border);
+  }
+}
+// Warning appears are orange
+.btn-turn-warning {
+  &:hover {
+    .button-variant(@btn-warning-color; @btn-warning-bg; @btn-warning-border);
+  }
+}
+// Danger and error appear as red
+.btn-turn-danger {
+  &:hover {
+   .button-variant(@btn-danger-color; @btn-danger-bg; @btn-danger-border);
+  }
+}
+// Success appears as green
+.btn-turn-success {
+  &:hover {
+    .button-variant(@btn-success-color; @btn-success-bg; @btn-success-border);
+  }
+}
+// Info appears as a neutral blue
+.btn-turn-info {
+  &:hover {
+    .button-variant(@btn-info-color; @btn-info-bg; @btn-info-border);
+  }
+}
+// Info appears as a neutral blue
+.btn-turn-inverse {
+  &:hover {
+    .button-variant(@btn-inverse-color; @btn-inverse-bg; @btn-inverse-border);
+  }
+}

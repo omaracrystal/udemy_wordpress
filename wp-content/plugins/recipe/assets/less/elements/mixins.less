@@ -1,0 +1,14 @@
+//
+// Mixins
+// --------------------------------------------------
+.border-radius(@radius: 3px) {
+    -webkit-border-radius: @radius;
+    -moz-border-radius: @radius;
+    border-radius: @radius;
+}
+.border-radius-custom(@topleft: 3px, @topright: 3px, @bottomright: 3px, @bottomleft: 3px) {
+    -webkit-border-radius: @topleft @topright @bottomright @bottomleft;
+    -moz-border-radius: @topleft @topright @bottomright @bottomleft;
+    border-radius: @topleft @topright @bottomright @bottomleft;
+}
+

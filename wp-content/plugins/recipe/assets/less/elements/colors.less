@@ -1,0 +1,229 @@
+//
+// Colors
+// --------------------------------------------------
+@state-inverse-text:              #fff;
+@state-inverse-bg:                @brand-inverse;
+@state-inverse-border:            darken(spin(@state-inverse-bg, -10), 5%);
+
+@text-alpha:            		  rgba(255,255,255,.5);
+@text-alpha-inverse:              rgba(0,0,0,.5);
+
+@brand-secondary:				  #0743a7;
+
+//
+// SECONDARY
+// --------------------------------------------------
+.bg-secondary {
+	background-color: @brand-secondary;
+}
+
+//
+// GRADIENT
+// --------------------------------------------------
+.brand-gradient {
+	#gradient .directional(@brand-primary,@brand-secondary,107deg);
+}
+.dark-gradient {
+	#gradient .directional(#000000,@gray-dark,107deg);
+}
+.brand-text-gradient {
+	background: -webkit-linear-gradient(left, @brand-primary, @brand-secondary);
+	background: linear-gradient(left, @brand-primary, @brand-secondary);
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+}
+
+.opaque {
+	.opacity(0.8);
+}
+
+
+//
+// BACKGROUNDS HELPERS
+// --------------------------------------------------
+
+.bg-primary {
+  .make-bg(@brand-primary);
+}
+.bg-success {
+  .make-bg(@brand-success);
+}
+.bg-info {
+  .make-bg(@brand-info);
+}
+.bg-warning {
+  .make-bg(@brand-warning);
+}
+.bg-danger {
+  .make-bg(@brand-danger);
+}
+
+.bg-inverse {
+  .make-bg(@brand-inverse);
+}
+
+.bg-white {
+  .make-bg(#fff, inherit);
+}
+
+.bg-gray-lighter {
+  .make-bg(@gray-lighter, inherit);
+}
+
+.bg-gray {
+  .make-bg(@gray, inherit);
+}
+
+.bg-gray-dark {
+  .make-bg(@gray-dark, inherit);
+}
+
+.bg-gray-darker {
+  .make-bg(@gray-darker, inherit);
+}
+
+.make-bg(@bgcolor, @text-color: #fff) {
+  background-color: @bgcolor;
+  color: @text-color;
+}
+
+//
+// BACKGROUNDS
+// --------------------------------------------------
+.brand-gradient,
+.dark-gradient,
+.bg-primary,
+.bg-secondary,
+.bg-success,
+.bg-info,
+.bg-warning,
+.bg-danger, 
+.bg-inverse {
+	color: white !important;
+}
+
+//
+// Text Colors
+// --------------------------------------------------
+.text-success {
+  .text-emphasis-variant(@state-success-bg);
+}
+.text-info {
+  .text-emphasis-variant(@state-info-bg);
+}
+.text-warning {
+  .text-emphasis-variant(@state-warning-bg);
+}
+.text-danger {
+  .text-emphasis-variant(@state-danger-bg); 
+}
+.text-inverse {
+  .text-emphasis-variant(@gray-darker); 
+}
+.text-white {
+	color: white !important;
+}
+.text-secondary {
+	color: @brand-secondary !important;
+}
+
+// Text helpers
+.text-inverse {
+  color: @brand-inverse;
+}
+.text-alpha {
+  color: @text-alpha;
+}
+.text-alpha-inverse {
+  color: @text-alpha-inverse;
+}
+
+//
+// Social Colors
+// --------------------------------------------------
+.bg-facebook,
+.bg-twitter,
+.bg-google-plus,
+.bg-youtube,
+.bg-github,
+.bg-linkedin,
+.bg-instagram,
+.bg-pinterest,
+.bg-vine,
+.bg-jsfiddle,
+.bg-paypal,
+.bg-flickr,
+.bg-tumblr,
+.bg-vk,
+.bg-vimeo,
+.bg-foursquare,
+.bg-dribbble {
+	color: white;
+	&:hover {
+		.z-depth-3;
+		color: white;
+	}
+	&:active {
+		@shadow:inset 0 3px 5px rgba(0, 0, 0, 0.125);
+		.box-shadow(@shadow);
+		color: white;
+	}
+	&:focus {
+		color: white;
+		i {
+			color: white;
+		}
+	}
+}
+
+
+.fg-facebook{color:#3b5998!important}
+.bg-facebook{background-color:#3b5998}
+
+.fg-twitter{color:#00aced!important}
+.bg-twitter{background-color:#00aced}
+
+.fg-google-plus{color:#dd4b39!important}
+.bg-google-plus{background-color:#dd4b39}
+
+.fg-youtube{color:#cd201f!important}
+.bg-youtube{background-color:#cd201f}
+
+.fg-github{color:#333!important}
+.bg-github{background-color:#333}
+
+.fg-linkedin{color:#007bb6!important}
+.bg-linkedin{background-color:#007bb6}
+
+.fg-instagram{color:#517fa4!important}
+.bg-instagram{background-color:#517fa4}
+
+.fg-pinterest{color:#cb2027!important}
+.bg-pinterest{background-color:#cb2027}
+
+.fg-vine{color:#00bf8f!important}
+.bg-vine{background-color:#00bf8f}
+
+.fg-jsfiddle{color:#4679bd!important}
+.bg-jsfiddle{background-color:#4679bd}
+
+.fg-paypal{color:#253b80!important}
+.bg-paypal{background-color:#253b80}
+
+.fg-flickr{color:#ff0084!important}
+.bg-flickr{background-color:#ff0084}
+
+.fg-tumblr{color:#32506d!important}
+.bg-tumblr{background-color:#32506d}
+
+.fg-vk{color:#45668e!important}
+.bg-vk{background-color:#45668e}
+
+.fg-vimeo{color:#aad450!important}
+.bg-vimeo{background-color:#aad450}
+
+.fg-foursquare{color:#0072b1!important}
+.bg-foursquare{background-color:#0072b1}
+
+.fg-dribbble{color:#ea4c89!important}
+.bg-dribbble{background-color:#ea4c89}

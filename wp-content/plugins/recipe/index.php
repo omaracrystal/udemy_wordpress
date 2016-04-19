@@ -8,13 +8,25 @@
  * Text Domain: recipe
  */
 
-// Setup
+if ( !function_exists( 'add_action' ) ){
+    echo 'Not allowed!';
+    exit();
+}
 
+
+// Setup
+define('RECIPE_PLUGIN_URL', __FILE__ );
 
 // Includes
+include( 'includes/activate.php' );
+include( 'includes/init.php' );
+include( 'includes/index.php' );
 
 
 // Hooks
 register_activation_hook( _FILE_, 'cu_activate_plugin' );
+add_action( 'init', 'recipe_init' );
+add_action( 'admin_init', 'recipe_admin_init' );
 
 // Shortcodes
+

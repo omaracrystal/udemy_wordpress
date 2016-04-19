@@ -1,0 +1,29 @@
+/* ========================================================================
+   Component: layout.less
+ ========================================================================== */
+
+// Taken from bootstrap variables
+// to match all components media queries
+@mq-desktop-lg:                           @screen-lg-desktop; // Usually 1200px
+@mq-desktop:                              @screen-desktop;    // Usually 992px
+@mq-tablet:                               @screen-sm-min;     // Usually 768px
+@mq-mobile:                               @screen-phone;      // Usually 480px
+
+@desktop-lg:                              ~"only screen and (min-width: @{mq-desktop-lg})";
+@desktop:                                 ~"only screen and (min-width: @{mq-desktop})";
+@tablet:                                  ~"only screen and (min-width: @{mq-tablet})";
+@mobile:                                  ~"only screen and (min-width: @{mq-mobile})";
+
+
+
+html, html a, body {
+    -webkit-font-smoothing: antialiased;
+    text-shadow: 1px 1px 1px rgba(0,0,0,0.004);
+}
+* {
+  	outline: 0!important;
+}
+
+body {
+	padding-top: @navbar-height;
+}

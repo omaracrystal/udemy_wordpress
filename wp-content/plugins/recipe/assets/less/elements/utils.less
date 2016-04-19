@@ -1,0 +1,180 @@
+/* ========================================================================
+   Component: utils.less
+ ========================================================================== */
+ 
+// 
+// Utilities classes to simplify 
+// components constructions
+// ------------------------------
+
+@margin-base: 10px;
+@margin-sm:   5px;
+@margin-lg:   15px;
+@margin-xl:   30px;
+
+@padding-lg:   15px;
+@padding-base: 10px;
+@padding-sm:   5px;
+
+@text-sm:               @font-size-base * .85;
+@text-lg:               @font-size-base * 3;
+
+@border-color:          #e1e1e1;
+
+// Margins
+// --------------------
+
+.m0 { margin: 0 !important; }
+.ml0 { margin-left: 0 !important; }
+.mr0 { margin-right: 0 !important; }
+.mt0 { margin-top: 0 !important; }
+.mb0 { margin-bottom: 0 !important; }
+
+.m  { margin: @margin-base !important; }
+.ml { margin-left: @margin-base !important; }
+.mr { margin-right: @margin-base !important; }
+.mt { margin-top: @margin-base !important; }
+.mb { margin-bottom: @margin-base !important; }
+
+.m-sm  { margin: @margin-sm !important; }
+.ml-sm { margin-left: @margin-sm !important; }
+.mr-sm { margin-right: @margin-sm !important; }
+.mt-sm { margin-top: @margin-sm !important; }
+.mb-sm { margin-bottom: @margin-sm !important; }
+
+.m-lg  { margin: @margin-lg !important; }
+.ml-lg { margin-left: @margin-lg !important; }
+.mr-lg { margin-right: @margin-lg !important; }
+.mt-lg { margin-top: @margin-lg !important; }
+.mb-lg { margin-bottom: @margin-lg !important; }
+
+.m-xl  { margin: @margin-xl !important; }
+.ml-xl { margin-left: @margin-xl !important; }
+.mr-xl { margin-right: @margin-xl !important; }
+.mt-xl { margin-top: @margin-xl !important; }
+.mb-xl { margin-bottom: @margin-xl !important; }
+
+// Margin vertical / horizontal
+.mv { .mt; .mb; }
+.mh { .ml; .mr; }
+
+.mv-lg { .mt-lg; .mb-lg; }
+.mh-lg { .ml-lg; .mr-lg; }
+
+.mv-sm { .mt-sm; .mb-sm; }
+.mh-sm { .ml-sm; .mr-sm; }
+
+// Paddings
+// --------------------
+
+.p0 { padding: 0 !important; }
+.p  { padding: @padding-base !important; }
+.pl { padding-left: @padding-base !important; }
+.pr { padding-right: @padding-base !important; }
+.pt { padding-top: @padding-base !important; }
+.pb { padding-bottom: @padding-base !important; }
+
+.p-sm  { padding: @padding-sm !important; }
+.pl-sm { padding-left: @padding-sm !important; }
+.pr-sm { padding-right: @padding-sm !important; }
+.pt-sm { padding-top: @padding-sm !important; }
+.pb-sm { padding-bottom: @padding-sm !important; }
+
+.p-lg  { padding: @padding-lg !important; }
+.pl-lg { padding-left: @padding-lg !important; }
+.pr-lg { padding-right: @padding-lg !important; }
+.pt-lg { padding-top: @padding-lg !important; }
+.pb-lg { padding-bottom: @padding-lg !important; }
+
+// Padding vertical / horizontal
+.pv { .pt; .pb; }
+.ph { .pl; .pr; }
+
+.pv-lg { .pt-lg; .pb-lg; }
+.ph-lg { .pl-lg; .pr-lg; }
+
+.pv-sm { .pt-sm; .pb-sm; }
+.ph-sm { .pl-sm; .pr-sm; }
+
+
+// Border
+// --------------------
+
+.b0 { border-width: 0 !important; }
+.bl0 { border-left-width: 0 !important; }
+.br0 { border-right-width: 0 !important; }
+.bt0 { border-top-width: 0 !important; }
+.bb0 { border-bottom-width: 0 !important; }
+
+.br { border-right: 1px solid @border-color;}
+.bl { border-left: 1px solid @border-color;}
+.bt { border-top: 1px solid @border-color;}
+.bb { border-bottom: 1px solid @border-color;}
+.b  { .br;.bl;.bt;.bb; }
+
+// Border Radius Clear
+
+.radius-clear {
+  border-radius: 0 !important;
+}
+
+// Box Shadow Clear
+
+.shadow-clear {
+  box-shadow: 0 0 0 #000 !important;
+}
+
+
+// Text sizing
+
+.text-sm {
+  font-size: @text-sm;
+}
+
+.text-lg {
+  font-size: @text-lg;
+}
+
+.inline {
+  display: inline-block !important;
+}
+
+.block-center {
+  margin: 0 auto;
+}
+
+// Vertical align helpers
+
+.align-middle {
+  vertical-align: middle;
+}
+.align-top {
+  vertical-align: top;
+}
+.align-bottom {
+  vertical-align: bottom;
+}
+
+
+// Background image
+.bg-center {
+  background-position: center center;
+  background-size: cover;
+}
+
+// List
+.list-icon {
+  em {
+    font-size: 14px;
+    width: 40px;
+    vertical-align: middle;
+    margin: 0;
+    display: inline-block;
+    text-align: center;
+    .transition(all .2s);
+    line-height: 30px;
+  }
+  div:hover em {
+    .scale(3, 3)
+  }
+}

@@ -1,0 +1,30 @@
+//
+// Sections
+// --------------------------------------------------
+@section-padding:				60px;
+@section-margin:				0;
+@section-bg:					@body-bg;
+
+.section {
+    position: relative;
+    margin: @section-margin 0;
+    padding: @section-padding 0;
+    background-color: @section-bg;
+
+    .container {
+        z-index: 2;
+    }
+
+    .container + .video-wrap {
+        z-index: 1;
+    }
+}
+
+.parallax {
+    background-color: transparent;
+    background-attachment: fixed;
+    background-position: 50% 0;
+    background-repeat: no-repeat;
+    overflow: hidden;
+}
+

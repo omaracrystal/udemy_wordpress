@@ -1,0 +1,136 @@
+//
+// Form Elements
+// --------------------------------------------------
+@ui-fg-color: @brand-primary;
+@ui-bg-color: #ddd;
+
+
+//
+// Checkbox and Radios
+// --------------------------------------------------
+.c-checkbox,
+.c-radio {
+  margin-right: 4px;
+  * {
+    cursor: pointer;
+  }
+  input {
+    opacity: 0;
+    position: absolute;
+    margin-left: 0 !important;
+  }
+  
+  // the element that replaces the input
+  span {
+    position: relative;
+    display: inline-block;
+    vertical-align: top;
+    margin-left: -20px;
+    width: 20px; height: 20px;
+    border-radius: 2px;
+    border: 1px solid #ccc;
+    margin-right: 5px;
+  }
+
+  &:hover span {
+    border-color: @ui-fg-color;
+  }
+
+  .form-inline & span {
+    margin-left: 0;
+  }
+
+  &.c-checkbox-rounded,
+  &.c-radio-rounded {
+    span {
+      border-radius: 500px;
+    }
+  }
+}
+
+/* override for radio */
+.c-radio span {
+  border-radius: 500px;
+}
+
+/* the icon */
+.c-checkbox,
+.c-radio {
+  span:before {
+    //content: "\2713"; /* comment content to use custom icon classes */
+    position: absolute;
+    top: 0; left: 0;  right: 0; bottom: 0;
+    opacity: 0;
+    text-align: center !important;
+    font-size: 12px;
+    line-height: 18px;
+    vertical-align: middle;
+  }
+}
+
+
+/* Checked state */
+
+input[type=checkbox]:checked + span:before,
+input[type=radio]:checked + span:before{
+  color: #fff;
+  opacity: 1;
+  transition: color .3 ease-out;
+}
+
+input[type=checkbox]:checked + span,
+input[type=radio]:checked + span {
+  border-color: @ui-fg-color;
+  background-color: @ui-fg-color;
+}
+
+/* override for radio */
+input[type=radio]:checked + span{
+  background-color: #fff;
+  &:before{ 
+    color: @ui-fg-color;
+  }
+}
+
+/* Disable state */
+
+input[type=checkbox]:disabled + span,
+input[type=radio]:disabled + span{
+  border-color: @ui-bg-color !important;
+  background-color: @ui-bg-color !important;
+}
+/* override for radio */
+input[type=radio]:disabled + span {
+  background-color: #fff !important;
+  &:before {
+    color: @ui-bg-color;
+  }
+}
+
+//
+// States
+// --------------------------------------------------
+.has-success {
+  .form-control-validation(@state-success-bg; @state-success-bg; @state-success-bg);
+}
+.has-warning {
+  .form-control-validation(@state-warning-bg; @state-warning-bg; @state-warning-bg);
+}
+.has-error {
+  .form-control-validation(@state-danger-bg; @state-danger-bg; @state-danger-bg);
+}
+
+.form-control {
+	//border-width: 2px;
+	.box-shadow(none);
+}
+
+.form-control-focus(@color: @input-border-focus) {
+  &:focus {
+    .box-shadow(none) !important;
+    border-color: @brand-primary;
+  }
+}
+
+
+

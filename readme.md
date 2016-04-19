@@ -794,4 +794,96 @@ if(comments_open()) {
 
     // Shortcodes
     ```
-1. Under **Hooks** section we add ``register_activation_hook()`` this function is called when the plugin is activated. 
+1. Under **Hooks** section we add ``register_activation_hook()`` this function is called when the plugin is activated. It has two parameters... ``register_activation_hook( __FILE__, 'cu_activate_plugin' );`` ... ``__FILE__`` is the full path and filename of the file. If used inside an include, the name of the included file is returned. 
+1. Next we want to define ``cu_activate_plugin`` create a folder within the recipe folder called ``includes`` then add the file ``activate.php`` Then go back into the ``includes`` folder and remember to **Include** this new file ... ``includes
+1. In ``activate.php`` define the function. First set up a conditional to check the version of php to make sure the plugin will render correctly... if not kill the function, and translate the message. 
+    ```
+    function cu_activate_plugin() {
+        if( version_compare(get_bloginfo('version'), '4.2', '<') ){
+            wp_die(__('You must update WordPress to use this plugin.', 'recipe') )
+        }
+    }
+    ```
+
+##Simple Trick to Secure a Plugin
+1. How do you protect your plugin from hakers? This helps in most cases. Open the ``index.php`` within the plugin's folder (being ``receipe``) and above the **//Setup** comment add this conditional statement to check if wordpress is loading the plugin or (if a hacker is):
+    ```
+    if (!function_exists( 'add_action' ) ){
+        echo 'Not allowed!';
+        exit();
+    }
+    ```
+1. Akismet folder has this same function
+
+##Creating a Custom Post Type
+1. https://codex.wordpress.org/Post_Types
+1. https://codex.wordpress.org/Function_Reference/register_post_type
+1. In  ``index.php`` under **//Hooks** add ``add_action( 'init', 'recipe_init' );`` Create the file within the ``includes`` folder and include it under **//Includes** 
+1. On the ``register_post_type`` link above, find the **init** function and add this to the ``init.php`` file under the ``includes`` folder. Here you will notice a new way of traslating; instead of ``__()`` you will see ``_x()`` This function; it's the same as ``__()`` except the second parameter allows for you to add a **context** This is useful when you have two words that are the same.
+1. Find all **Book** and replace with **Recipe** then find all **your-plugin-textdomain** and replace with the name of your plugin **recipe**. Now because we don't need any context for translation for this plugin, remove all ``_x()`` and corresponding **contexts**_
+1. Next in the ``$args`` array, this is a list of settings for our custom post type. Under th **'description'** tag add the discription of the plugin such as: **A custom post type for recipes.** For the **'rewrite'** key change the ``'slug' => 'book'`` to ``'slug' => 'recipe'``. For the **'menu_position'** key replace **null** with **20** for now. This can be any number. The lower the number the lower the position. The last key **'supports'** is very important to set this array. We want to keep all default settings except **excerpt & comments**. Then add **taxonomies** to the end of the ``$args`` array. The key value will be an array of categories and tags. ``array( 'category', 'post_tag')``. These are built into Wordpress and help with SEO
+1. Save and Refresh - and see on the dashboard everything that is added. And you can see that you can now add Recipes using the Wordpress built in UI.
+
+##Metadata and Metaboxes
+1. https://codex.wordpress.org/Metadata_API
+1. https://developer.wordpress.org/reference/functions/add_meta_box/
+1. So far your Recipe Posts you can add: create content, add tags, and a feature image. We would like to now extent this post type, by adding custom fields such as: ``["How long it take to cook", "Cooking Utilcils Required", "Cooking Experience", "Meal Type"]``
+1. Normally you could create a table in the DB to store this information. However, Wordpress proves **Metadata API** to do this for you. There are 4 functions you can use: ``[ add_metadata(), delete_metadata(), get_metadata(), update_metadata()]`` However, we are not going to use any of these functions. If you look into Wordpress's documentations for you will notice it warns against using these functions "directly by plugins or themes. Instead, use the corresponding meta functions for the object type you're working with."
+    ```
+    The Metadata API is a simple and standarized way for retrieving and manipulating metadata of various WordPress object types. Metadata for an object is a represented by a simple key-value pair. Objects may contain multiple metadata entries that share the same key and differ only in their value.
+    ```
+1. In order to use a **Metadata API** function that will work with our plug in we first need to create a **Meta Box**. Meta boxes are all the boxes/ text areas you can click and drag within your post section of the dashboard. We don't have to use a meta box, but it will become convienent at some point. In order to add a **Meta Box we first need to add a hook to when Wordpress initializes the admin** See below.
+1. In recipe > index.php add the hook ``add_action( 'admin_init', 'recipe_admin_init' );`` Create an ``admin`` folder within the ``includes`` folder, and add ``init.php`` within that folder. Then remember to **//Include** the file within the ``index.php`` : ``include( 'includes/index.php' );``
+1. In admin > ``init.php`` define the function for that hook. Notice that we call another action to add the **Meta Boxes** ('recipe' can be anything )...The function we want to call is custom. Add this file now (**create-metaboxes**) to the **admin** folder. Then define the **cu_create_metaboxes** function. Remember to include it too (see below).
+    ```
+    function recipe_admin_init() {
+        include( 'create-metaboxes.php' );
+
+        add_action( 'add_meta_boxes_recipe', 'cu_create_metaboxes' );
+    }
+    ```
+1. https://developer.wordpress.org/reference/functions/add_meta_box/ has:
+    ```
+    function cu_create_metaboxes() {
+        add_meta_box(
+            'cu_recipe_options_mb', //ID
+            __( 'Recipe Options', 'recipe' ), //Type
+            'cu_recipe_options_mb', //Name of the function that will be called when this metabox is displayed (define in recipe-options.php)
+            'recipe', //Post Type
+            'normal', //Context (where will the metabox appear on default). There 3 choices: {'normal': below wysiwyg editor, 'advanced' above wysiwyg editor: , 'side': metabox appears on the sidebar}
+            'high' //priority, 4 types ['high', 'core', 'low', 'default']
+        )
+    }
+    ```
+1. Last we need to create a new file called **recipe-options.php** then define the function **cu_recipe_options_mb** which will contain the **metabox function** echo a message to see it appear in the dashboard. 
+    ```
+    function recipe_admin_init() {
+        echo 'Hello';
+    }
+    ```
+...
+    ```
+    function recipe_admin_init() {
+        include( 'create-metaboxes.php' );
+        include( 'recipe-options.php' );
+
+        add_action( 'add_meta_boxes_recipe', 'cu_create_metaboxes' );
+    }
+    ```
+1. All that's left is to create the field and save the data
+
+
+##Enqueueing Files
+1. https://codex.wordpress.org/Function_Reference/plugins_url
+1. Download and paste ``assets`` folder to the recipe folder. This is the same ``assests`` folder in the theme > udemy area. Why have include it twice? Because that's what you have to do for all plugins in addition to all themes. 
+1. in includes > admin > init add the action hook: ``add_action( 'admin_equeue_scripts', 'cu_admin_enqueue' );`` Then create the **enqueue.php** file within the **admin** folder
+1. Within this **enqueue** function we are going to **enqueue** and **register** the bootstrap's css. We don't need any js at the moment. 
+1. One thing that is different about plugins, how do we get the url to our plugins asset's folder? Well, Wordpress provides a functions called **plugins_url( $path, $plugin);** : https://codex.wordpress.org/Function_Reference/plugins_url using this Wordpress function add it to the second parameter for the **register and enqueue** functions:
+1. The two parameters **plugins_url( $path, $plugin);**
+    - **$path** the direct path realitive to this file
+    - **$plugin** the location of the plugin. You can use ``__FILE__`` or ``dirname(__FILE__)`` for nested folders. There is a more dynamic and easier way to include this though. Under **includes > index.php** under **Setup** add ``define('RECIPE_PLUGIN_URL', __FILE__ );`` Now we don't have to worry about nesting. We can just use the constant **RECIPE_PLUGIN_URL**
+    ```
+    
+    ```
+    
+

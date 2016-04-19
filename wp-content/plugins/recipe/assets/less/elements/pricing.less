@@ -1,0 +1,259 @@
+//
+// Prices
+// --------------------------------------------------
+
+.pricing { position: relative; }
+.pricing [class^=col-] {
+    padding: 0;
+    margin-top: 20px;
+    margin-bottom: 40px;
+}
+
+
+//
+// Price Boxes
+// --------------------------------------------------
+
+.pricing-box {
+    position: relative;
+    .border-radius(2px);
+    text-align: center;
+    @shadow: 1px 1px 1px 0 rgba(0, 0, 0, 0.07), 1px 2px 5px 0 rgba(0, 0, 0, 0.06);
+    .box-shadow(@shadow);
+    background-color: #FFF;
+}
+
+
+//
+// Price Boxes - Title
+// --------------------------------------------------
+
+.pricing-title {
+    padding: 15px 0;
+    //background-color: #F9F9F9;
+    .border-radius-custom(2px 2px 0 0);
+    text-shadow: 1px 1px 1px #FFF;
+    border-bottom: 1px solid rgba(0,0,0,0.05);
+
+    h3 {
+        margin: 0;
+        font-size: 20px;
+        letter-spacing: 1px;
+        font-weight: bold;
+        text-transform: uppercase;
+        color: #555;
+    }
+
+    span {
+        display: block;
+        color: #999;
+        font-weight: 300;
+        font-size: 14px;
+        margin-top: 3px;
+        text-transform: uppercase;
+    }
+}
+
+
+//
+// Price Boxes - Price
+// --------------------------------------------------
+.pricing-price {
+    position: relative;
+    padding: 25px 0;
+    color: #333;
+    font-weight: 300;
+    font-size: 64px;
+    line-height: 1;
+
+    &:after {
+        content: '';
+        position: absolute;
+        width: 100px;
+        border-top: 1px solid rgba(0,0,0,0.1);
+        top: auto;
+        bottom: 0;
+        left: 50%;
+        margin-left: -50px;
+    }
+
+    span {
+        display: inline-block;
+        vertical-align: top;
+        margin: 7px 3px 0 0;
+        font-size: 28px;
+        font-weight: normal;
+
+        &.price-tenure {
+            vertical-align: baseline;
+            font-size: 16px;
+            font-weight: normal;
+            color: #999;
+            margin: 0 0 0 3px;
+        }
+    }
+}
+
+
+//
+// Price Boxes - Features
+// --------------------------------------------------
+.pricing-features {
+    border-bottom: 1px solid rgba(0,0,0,0.075);
+
+    ul {
+        margin: 0;
+        padding: 15px 0;
+        list-style: none;
+    }
+
+    li {
+        padding: 6px 0;
+        font-size: 14px;
+    }
+}
+
+
+//
+// Price Boxes - Actions
+// --------------------------------------------------
+.pricing-action { padding: 15px 30px; }
+
+
+//
+// Price Boxes - Best Price
+// --------------------------------------------------
+.pricing-box {
+    &.best-price {
+        z-index: 10;
+        margin: -20px -1px 0 -1px;
+
+        .pricing-title {
+            background-color: #FFF;
+            padding: 20px 0;
+
+            h3 {
+                font-size: 22px;
+            }
+        }
+
+        .pricing-price {
+            color: @brand-primary;
+            font-size: 72px;
+        }
+    }
+
+    /* Pricing Boxes - Minimal
+    -----------------------------------------------------------------*/
+
+    &.pricing-minimal {
+        .pricing-price {
+            background-color: #FFF;
+            border-bottom: 1px solid rgba(0,0,0,0.075);
+
+            &:after {
+                display: none;
+            }
+        }
+    }
+}
+
+
+
+//
+// Price Boxes - Extended
+// --------------------------------------------------
+.pricing-box {
+    &.pricing-extended {
+        background-color: #FFF;
+        text-align: left;
+
+        .pricing-desc {
+            float: left;
+            width: 75%;
+            padding: 25px;
+        }
+
+        .pricing-title {
+            background-color: transparent;
+            padding-top: 0;
+            text-align: left;
+        }
+
+        .pricing-features {
+            border: 0;
+
+            ul {
+                padding: 15px 0 0 0;
+            }
+
+            li {
+                padding: 6px 0;
+                font-size: 15px;
+                width: 50%;
+                float: left;
+
+                i {
+                    position: relative;
+                    top: 1px;
+                    width: 16px;
+                    margin-right: 2px;
+                }
+            }
+        }
+
+        .pricing-action-area {
+            position: absolute;
+            top: 0;
+            left: auto;
+            right: 0;
+            width: 25%;
+            height: 100%;
+            border-left: 1px solid rgba(0,0,0,0.05);
+            background-color: #F9F9F9;
+            padding: 30px;
+            .border-radius-custom(0 3px 3px 0);
+            text-align: center;
+
+            .pricing-price,
+            .pricing-action {
+                padding: 0;
+            }
+
+            .pricing-price {
+                padding-bottom: 20px;
+
+                &:after {
+                    display: none;
+                }
+
+                span.price-tenure {
+                    display: block;
+                    margin: 10px 0 0 0;
+                    font-weight: 300;
+                    text-transform: uppercase;
+                    font-size: 14px;
+                }
+            }
+        }
+
+        .pricing-meta {
+            color: #999;
+            font-weight: 300;
+            font-size: 14px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            padding-bottom: 10px;
+        }
+    }
+}
+
+.table-comparison,
+.table-comparison th { text-align: center; }
+
+.table-comparison th:first-child,
+.table-comparison td:first-child {
+    text-align: left;
+    font-weight: bold;
+}
+
