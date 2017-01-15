@@ -16,7 +16,7 @@ if(comments_open()) {
 ?>
 
     <h4>Leave a comment</h4>
-    <form action="<php eco site_url('wp-comments-posts.php'); ?>" method="post" id="commentform">
+    <form action="<?php echo site_url('wp-comments-post.php'); ?>" method="post" id="commentform">
         <input type="hidden" name="comment_post_ID" value="<?php echo $post->ID; ?>" id="comment_post_ID"></input>
         <div class="form-group">
             <label>Name / Alias (required)</label>
@@ -41,5 +41,5 @@ if(comments_open()) {
 
 <?php
 }else{
-    _e('Comments are closed', 'udemy' );
+    _e('Comments are closed', 'newwordpresstheme' );
 }
